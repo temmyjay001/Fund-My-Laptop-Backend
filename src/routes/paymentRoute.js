@@ -15,9 +15,9 @@ const {
 } = require("../controllers/paymentController");
 
 //routes for making payment, validating OTP and verifying payment
-router.post("/pay", authorise(), card_payment);
-router.post("/validate", authorise(), validate_payment);
-router.get("/verify", authorise(), verify_payment);
+router.post("/pay", card_payment);
+router.post("/validate", validate_payment);
+router.get("/verify", verify_payment);
 
 //exports router as a module
 module.exports = router;

@@ -1,14 +1,12 @@
 /**=================================================================
- * ====   TITLE:: IMPLEMENTATION OF EMAIL VERIFICATION ROUTE    ====  
+ * ====   TITLE:: IMPLEMENTATION OF EMAIL VERIFICATION ROUTE    ====
  * ====   AUTHOR:: HACKINWALE <hackinwale.developer@gmail.com>  ====
  * ====   DATE::            19TH JUNE 2020                      ====
  * =================================================================
  */
 
- class EmailVerificationController{
-
+class EmailVerificationController {
   // TODO: Code here soon...
+}
 
- }
-
- module.exports = new EmailVerificationController();
+module.exports = new EmailVerificationController();

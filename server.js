@@ -10,7 +10,7 @@ const routes = require("./src/routes");
 preMiddlewares(app);
 
 // Api routes
-app.use("/api", routes());
+app.use("/api", routes);
 
 // Web routes
 app.use("/", (req, res) => {
