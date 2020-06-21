@@ -13,8 +13,7 @@ module.exports.authorise = () => {
       const user = await User.findOne({ _id: decoded.id });
       //check if user exists and active
       if (!user) throw new CustomError("unauthorized user", 401);
-
-      req.token = token;
+      // req.token = token;
       req.user = user;
       next();
     } else {
@@ -24,15 +23,5 @@ module.exports.authorise = () => {
         success: false,
       });
     }
-    // const response = require("../utils/response");
-    // const jwtSecret = process.env.JWT_SECRET;
-    // if (!user) {
-    //   throw new Error();
-    // }
-    // const token = req.header("Authorization").replace("Bearer", "").trim();
-    // const decoded = jwt.verify(token, jwtSecret);
-    // if (!token) {
-    //   res.send(response("Please authenticate!", error));
-    // }
   };
 };

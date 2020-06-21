@@ -9,8 +9,7 @@ const server = require('supertest');
 const app = require('../server');
 const dbHandler = require('./db-handler');
 const jwt = require('jsonwebtoken');
-const dotenv = require('dotenv');
-dotenv.config();
+require('../src/utils/env')
 const mongoose = require('mongoose');
 const User = require('../src/models/User');
 

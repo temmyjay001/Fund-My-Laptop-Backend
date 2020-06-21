@@ -5,8 +5,8 @@ const VerifyEmail = require("../utils/EmailVerification");
 
 class UserContoller {
   async create(req, res) {
-    let { number } = req.body;
-    number = number.trim();
+    let {number=''} = req.body;
+    number = number.trim()
 
     if (number.charAt(0) !== "+") {
       const NGNCode = "+234";
@@ -14,16 +14,13 @@ class UserContoller {
       number = NGNCode.concat(number);
     }
 
-    // console.log("why")
     const data = await UserServ.create(req.body);
-    if (!data)
-      res.status(406).send(response("User account not created ", data, false));
-    // Mail containing verification link will be sent to the user.
-    else {
-      const mailStatus = await VerifyEmail.createVerificationLink(data, req);
+    if (process.env.NODE_ENV === 'production') {
+      // Mail containing verification link will be sent to the user.
+      const mailStatus =  await VerifyEmail.createVerificationLink(data, req);
       console.log(mailStatus.message);
-      res.status(201).send(response("User account created", data));
     }
+    res.status(201).send(response("User account created", data));
   }
 
   async login(req, res) {
