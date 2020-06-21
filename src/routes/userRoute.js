@@ -1,7 +1,6 @@
 const router = require("express").Router();
 const UserCtrl = require("./../controllers/UserController");
 const RoleCheck = require("../middlewares/roleMiddleware");
-const auth = require("./../middlewares/authenticatorMiddleware")
 
 module.exports = () => {
      router.post("/", UserCtrl.create)
