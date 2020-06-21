@@ -1,45 +1,27 @@
-const jwt = require('jsonwebtoken');
-const response = require('../utils/response');
-const User = require('../models/User');
+const jwt = require("jsonwebtoken");
+const response = require("../utils/response");
+const User = require("../models/User");
 
-const jwtSecret = process.env.JWT_SECRET;
+module.exports.rolecheck = () => {
+  return async (req, res, next) => {
+    if (req.headers.authorization) {
+      const decoded = await jwt.verify(
+        req.headers.authorization.split(" ")[1],
+        process.env.JWT_SECRET
+      );
+      const user = await User.findOne({ _id: decoded.id });
 
-class RoleAuth {  
+      if (!user)
+        return res.staus(401).send(response("Access Denied", null, false));
+      else if (user.role !== "admin")
+        return res.status(401).send(response("Access Denied", null, false));
 
-async rolecheck (req, res, next)  {
-
-    // const auth = (req, res, next) => {
-    // Find JWT in Headers
-
-    const token = req.header("Authorization").replace("Bearer", "").trim();
-
-    if(!token){
-
-        return res.status(401).send(response("Authorization Required"));
-        
-    }else {
-
-        const decoded = jwt.verify(token, jwtSecret);
-
-        const user = await User.findOne({_id: decoded.id,});
-        
-
-        if(!user){
-
-            return res.staus(401).send(response("Access Denied"));
-
-        } else if(user.role !== "admin") {
-
-            return res.status(401).send(response("Access Denied"));
-
-        } 
-        
-        next();
-        
-    }
+      next();
+    } else
+      res.status(404).json({
+        message: "Authorization token required",
+        data: null,
+        success: false,
+      });
   };
-}
-
-module.exports = new RoleAuth();
-
-
+};
